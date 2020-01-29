@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+ if [[ -z $1 ]] || [[ $1 == "-" ]]; then
+    input=$(mktemp)
+    trap "rm -f $input" EXIT
+    cat /dev/stdin > $input
+else
+    input=$1
+fi
+
+</dev/null fzf --phony \
+            --print-query \
+            --preview "jq --color-output -r {q} $input" \
+            --preview-window="down:99%" \
+            --height="50%" \
+            --query="."
