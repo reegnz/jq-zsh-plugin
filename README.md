@@ -1,6 +1,16 @@
 # jq zsh plugin
 
-Interactively build jq expressions from stdin!
+Interactively build [jq](https://stedolan.github.io/jq/) expressions.
+
+This zsh plugin gives you jq superpowers!
+
+## Table of contents
+
+- [Usage](#usage)
+- [Key bindings](#key-bindings)
+- [Demos](#demos)
+  - [Interactive jq query construction](#interactive-jq-query-construction)
+  - [Insert jq query in the middle of a pipeline](#insert-jq-query-in-the-middle-of-a-pipeline)
 
 ## Usage
 
