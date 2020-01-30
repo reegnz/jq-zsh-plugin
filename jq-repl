@@ -11,5 +11,6 @@ fi
             --print-query \
             --preview "jq --color-output -r {q} $input" \
             --preview-window="down:99%" \
-            --height="50%" \
-            --query="."
+            --height="99%" \
+            --query="." \
+            --bind "alt-up:preview-page-up,alt-down:preview-page-down"
