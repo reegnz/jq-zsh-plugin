@@ -19,3 +19,5 @@ zle -N jq-complete
 # bind `alt + j` to jq-complete
 bindkey '\ej' jq-complete
 fi
+
+export PATH=$PATH:${0:A:h}/bin
