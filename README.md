@@ -6,11 +6,40 @@ This zsh plugin gives you jq superpowers!
 
 ## Table of contents
 
+- [Installation](#installation)
 - [Usage](#usage)
 - [Key bindings](#key-bindings)
 - [Demos](#demos)
   - [Interactive jq query construction](#interactive-jq-query-construction)
   - [Insert jq query in the middle of a pipeline](#insert-jq-query-in-the-middle-of-a-pipeline)
+
+## Installation
+
+This plugin requires [fzf](https://github.com/junegunn/fzf) to be available
+on your PATH.
+
+The project consists of two components:
+- a `jq-repl` command
+- a `jq.plugin.zsh` providing line-editor feature using `jq-repl`
+
+
+### [zplug](https://github.com/zplug/zplug)
+
+```sh
+zplug reegnz/jq-zsh-plugin
+```
+
+### [Antigen](https://github.com/zsh-users/antigen)
+
+```sh
+antigen bundle reegnz/jq-zsh-plugin
+```
+
+### [Zgen](https://github.com/tarjoilija/zgen)
+
+```sh
+zgen load reegnz/jq-zsh-plugin
+```
 
 ## Usage
 
