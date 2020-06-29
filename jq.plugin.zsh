@@ -9,7 +9,9 @@ jq-complete() {
     local query="$(__get_query)"
     local ret=$?
     if [ -n "$query" ]; then
-        LBUFFER="${LBUFFER} | jq -r '$query'"
+        LBUFFER="${LBUFFER} | jq"
+        [[ -z "$JQ_REPL_ARGS" ]] || LBUFFER="${LBUFFER} ${JQ_REPL_ARGS}"
+        LBUFFER="${LBUFFER} '$query'"
     fi
     zle reset-prompt
     return $ret

@@ -9,7 +9,7 @@ fi
 
 </dev/null fzf --phony \
             --print-query \
-            --preview "jq --color-output -r {q} $input" \
+            --preview "jq --color-output $JQ_REPL_ARGS {q} $input" \
             --preview-window="down:99%" \
             --height="99%" \
             --query="." \
