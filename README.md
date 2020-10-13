@@ -69,3 +69,11 @@ During interactive querying, the following shortcuts can be used:
 ### Insert jq query in the middle of a pipeline
 
 [![asciicast](https://asciinema.org/a/296767.svg)](https://asciinema.org/a/296767)
+
+## Troubleshooting
+
+### Pressing alt-j creates a `∆` symbol in iTerm2
+
+    Cmd + , to enter preferences
+    Go to Profiles, select your profile from the pane on the left hand side, then go to the keys tab.
+    Set Left Option (⌥) Key to Esc+
