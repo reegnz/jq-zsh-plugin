@@ -55,6 +55,9 @@ During interactive querying, the following shortcuts can be used:
 
 | Shortcut | Effect |
 | ------ | -------- |
+| up | Navigate path queries |
+| down | Navigate path queries |
+| tab | Select path query |
 | `shift + up` | Scroll up |
 | `shift + down` | Scroll down |
 | `alt + up` | Scroll up full page |

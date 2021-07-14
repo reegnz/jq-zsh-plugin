@@ -7,10 +7,16 @@ else
     input=$1
 fi
 
-</dev/null fzf --phony \
-            --print-query \
-            --preview "jq --color-output $JQ_REPL_ARGS {q} $input" \
-            --preview-window="down:99%" \
-            --height="99%" \
-            --query="." \
-            --bind "alt-up:preview-page-up,alt-down:preview-page-down"
+# path logic inspired by https://github.com/stedolan/jq/issues/243
+<"$input" jq -r '[
+    path(..) |
+    map(select(type=="string") // "[]") |
+    join(".") | split(".[]") | join("[]")
+  ] | map("." + .) | unique | .[]' |
+fzf \
+    --preview "jq --color-output $JQ_REPL_ARGS {q} $input" \
+    --preview-window="down:90%" \
+    --height="99%" \
+    --query="." \
+    --bind "tab:replace-query,return:print-query" \
+    --bind "alt-up:preview-page-up,alt-down:preview-page-down"
