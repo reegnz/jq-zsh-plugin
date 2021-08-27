@@ -1,22 +1,19 @@
-#!/usr/bin/env bash
- if [[ -z $1 ]] || [[ $1 == "-" ]]; then
-    input=$(mktemp)
-    trap "rm -f $input" EXIT
-    cat /dev/stdin > $input
-else
-    input=$1
-fi
+#!/usr/bin/env zsh
 
+_jq_repl() {
 # path logic inspired by https://github.com/stedolan/jq/issues/243
-<"$input" jq -r '[
+jq -r '[
     path(..) |
     map(select(type=="string") // "[]") |
     join(".") | split(".[]") | join("[]")
-  ] | map("." + .) | unique | .[]' |
+  ] | map("." + .) | unique | .[]' $1 |
 fzf \
-    --preview "jq --color-output $JQ_REPL_ARGS {q} $input" \
+    --preview "jq --color-output $JQ_REPL_ARGS {q} $1" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
     --bind "tab:replace-query,return:print-query" \
     --bind "alt-up:preview-page-up,alt-down:preview-page-down"
+}
+
+_jq_repl =( if [ "${1:--}" = "-" ] ; then cat ; else < $1 ; fi )
