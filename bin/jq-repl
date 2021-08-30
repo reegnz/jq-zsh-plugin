@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
- if [[ -z $1 ]] || [[ $1 == "-" ]]; then
+#!/bin/sh
+if [ -z "$1" ] || [ "$1" = "-" ]; then
     input=$(mktemp)
-    trap "rm -f $input" EXIT
-    cat /dev/stdin > $input
+    trap 'rm -f "$input"' EXIT
+    cat /dev/stdin > "$input"
 else
-    input=$1
+    input="$1"
 fi
 
 # path logic inspired by https://github.com/stedolan/jq/issues/243
@@ -14,7 +14,7 @@ fi
     join(".") | split(".[]") | join("[]")
   ] | map("." + .) | unique | .[]' |
 fzf \
-    --preview "jq --color-output $JQ_REPL_ARGS {q} $input" \
+    --preview "jq --color-output $JQ_REPL_ARGS {q} \"$input\"" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
