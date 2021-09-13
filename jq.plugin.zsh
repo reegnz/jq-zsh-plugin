@@ -1,7 +1,7 @@
 if [[ -o zle ]]; then
 
 __get_query() {
-    eval "$LBUFFER" | jq-repl
+    jq-repl -- ${LBUFFER}
     return $?
 }
 

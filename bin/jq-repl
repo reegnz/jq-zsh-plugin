@@ -1,22 +1,33 @@
 #!/bin/sh
-if [ -z "$1" ] || [ "$1" = "-" ]; then
-    input=$(mktemp)
-    trap 'rm -f "$input"' EXIT
-    cat /dev/stdin > "$input"
+#
+# if 1st arg is '-' read from stdin
+# if 1st arg is '--' take the command after it verbatim and execute it to get the input
+# if 1st arg is anything else, treat it as a file
+set -eu
+
+if [ -n "${1:-}" ] && [ "$1" != "-" ] && [ "$1" != "--" ]; then
+  input="$1"
 else
-    input="$1"
+  input=$(mktemp)
+  trap 'rm -f "$input"' EXIT
 fi
 
-# path logic inspired by https://github.com/stedolan/jq/issues/243
-<"$input" jq -r '[
-    path(..) |
-    map(select(type=="string") // "[]") |
-    join(".") | split(".[]") | join("[]")
-  ] | map("." + .) | unique | .[]' |
-fzf \
-    --preview "jq --color-output $JQ_REPL_ARGS {q} \"$input\"" \
+if [ -z "${1:-}" ] || [ "$1" = "-" ]; then
+  cat /dev/stdin >"$input"
+fi
+if [ "${1:-}" = "--" ]; then
+  shift
+  export FZF_JQ_REPL_COMMAND="$* > $input; jq-paths <$input"
+else
+  export FZF_JQ_REPL_COMMAND="jq-paths < $input"
+fi
+
+eval "$FZF_JQ_REPL_COMMAND" |
+  fzf \
+    --preview "jq --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
     --bind "tab:replace-query,return:print-query" \
-    --bind "alt-up:preview-page-up,alt-down:preview-page-down"
+    --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
+    --bind "ctrl-r:reload($FZF_JQ_REPL_COMMAND)+refresh-preview"

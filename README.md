@@ -20,6 +20,7 @@ on your PATH.
 
 The project consists of two components:
 - a `jq-repl` command
+- a `jq-paths` command
 - a `jq.plugin.zsh` providing line-editor feature using `jq-repl`
 
 
@@ -55,13 +56,14 @@ During interactive querying, the following shortcuts can be used:
 
 | Shortcut | Effect |
 | ------ | -------- |
-| up | Navigate path queries |
-| down | Navigate path queries |
-| tab | Select path query |
+| `up` | Navigate path queries |
+| `down` | Navigate path queries |
+| `tab` | Select path query |
 | `shift + up` | Scroll up |
 | `shift + down` | Scroll down |
 | `alt + up` | Scroll up full page |
 | `alt + down` | Scroll down full page |
+| `ctrl+r` | Reload input |
 
 ## Demos
 
