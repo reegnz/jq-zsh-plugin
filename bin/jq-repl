@@ -19,7 +19,7 @@ if [ "${1:-}" = "--" ]; then
   shift
   export FZF_JQ_REPL_COMMAND="$* > $input; jq-paths <$input"
 else
-  export FZF_JQ_REPL_COMMAND="jq-paths < $input"
+  export FZF_JQ_REPL_COMMAND="jq-paths < \"$input\""
 fi
 
 eval "$FZF_JQ_REPL_COMMAND" |
