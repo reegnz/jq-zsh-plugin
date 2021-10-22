@@ -1,7 +1,6 @@
 #!/usr/bin/env jq -r -f
 # path logic inspired by https://github.com/stedolan/jq/issues/243
 [
-  path(..) |
-  map(select(type=="string") // "[]") |
-  join(".") | split(".[]") | join("[]")
-] | map("." + .) | unique | .[]
+  path(..) | map(select(type == "string") // "[]")
+  | join(".")
+] | sort | unique | .[] | split(".[]") | join("[]") | "." + .
