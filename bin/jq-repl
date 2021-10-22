@@ -22,6 +22,14 @@ else
   export FZF_JQ_REPL_COMMAND="jq-paths < \"$input\""
 fi
 
+fzf_notation_types="~!@#$%^&*;/|"
+skip_notation="$(echo "$FZF_JQ_REPL_COMMAND" | sed -E "s,[^$fzf_notation_types],,g")"
+fzf_notation="$(echo "$fzf_notation_types" | sed -E "s,[$skip_notation],,g" | head -c 1)"
+if [ -z "$fzf_notation" ]; then
+  # fall back to default and hope for the best
+  fzf_notation="#"
+fi
+
 eval "$FZF_JQ_REPL_COMMAND" |
   fzf \
     --preview "jq --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
@@ -30,4 +38,4 @@ eval "$FZF_JQ_REPL_COMMAND" |
     --query="." \
     --bind "tab:replace-query,return:print-query" \
     --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
-    --bind "ctrl-r:reload#$FZF_JQ_REPL_COMMAND#+refresh-preview"
+    --bind "ctrl-r:reload${fzf_notation}${FZF_JQ_REPL_COMMAND}${fzf_notation}+refresh-preview"
