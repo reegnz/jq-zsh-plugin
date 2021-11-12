@@ -1,8 +1,16 @@
 if [[ -o zle ]]; then
 
 __get_query() {
-    jq-repl -- ${LBUFFER}
-    return $?
+    if [ "${JQ_ZSH_PLUGIN_EXPAND_ALIASES:-0}" -eq 1 ]; then
+        unset 'functions[_jq-plugin-expand]'
+        functions[_jq-plugin-expand]=${LBUFFER}
+        (($+functions[_jq-plugin-expand])) && COMMAND=${functions[_jq-plugin-expand]#$'\t'}
+        jq-repl -- ${COMMAND}
+        return $?
+    else
+        jq-repl -- ${LBUFFER}
+        return $?
+    fi
 }
 
 jq-complete() {
