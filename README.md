@@ -18,11 +18,11 @@ This zsh plugin gives you jq superpowers!
 This plugin requires [fzf](https://github.com/junegunn/fzf) to be available
 on your PATH.
 
-The project consists of two components:
+The project consists of the following components:
+
 - a `jq-repl` command
 - a `jq-paths` command
-- a `jq.plugin.zsh` providing line-editor feature using `jq-repl`
-
+- a `jq.plugin.zsh` providing line-editor feature utilizing `jq-repl`
 
 ### [zplug](https://github.com/zplug/zplug)
 
@@ -77,8 +77,19 @@ During interactive querying, the following shortcuts can be used:
 
 ## Troubleshooting
 
-### Pressing alt-j creates a `∆` symbol in iTerm2
+### MacOS: Pressing alt-j creates a `∆` symbol in iTerm2
 
-    Cmd + , to enter preferences
-    Go to Profiles, select your profile from the pane on the left hand side, then go to the keys tab.
-    Set Left Option (⌥) Key to Esc+
+- `Cmd + ,` to enter preferences
+- Go to Profiles
+- select your profile from the pane on the left hand side
+- go to the keys tab
+- Set Left Option (⌥ ) Key to `Esc+`
+
+### Disable expanding shell aliases
+
+The plugin automatically expands shell aliases in a command before passing it
+to `jq-repl`. To disable, put the following line into your `.zshrc`:
+
+```
+JQ_ZSH_PLUGIN_EXPAND_ALIASES=0
+```
