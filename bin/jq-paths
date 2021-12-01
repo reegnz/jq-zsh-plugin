@@ -1,4 +1,4 @@
-#!/usr/bin/env jq -r -f
+#!/usr/bin/env -S jq -r -f
 # path logic inspired by https://github.com/stedolan/jq/issues/243
 [
   path(..) | map(select(type == "string") // "[]")
