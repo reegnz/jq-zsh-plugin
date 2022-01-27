@@ -30,14 +30,15 @@ if [ -z "$fzf_notation" ]; then
   fzf_notation="#"
 fi
 
+
 query=$(eval "$FZF_JQ_REPL_COMMAND" |
-    fzf
-    --preview "jq --color-output ${JQ_REPL_ARGS:-} {q} "$input""
-    --preview-window="down:90%"
-    --height="99%"
-    --query="."
-    --bind "tab:replace-query,return:print-query"
-    --bind "alt-up:preview-page-up,alt-down:preview-page-down"
+  fzf \
+    --preview "jq --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
+    --preview-window="down:90%" \
+    --height="99%" \
+    --query="." \
+    --bind "tab:replace-query,return:print-query" \
+    --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
     --bind "ctrl-r:reload${fzf_notation}${FZF_JQ_REPL_COMMAND}${fzf_notation}+refresh-preview"
 )
 jq --color-output ${JQ_REPL_ARGS:-} $query "$input"
