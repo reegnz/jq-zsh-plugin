@@ -79,11 +79,21 @@ During interactive querying, the following shortcuts can be used:
 
 ### MacOS: Pressing alt-j creates a `∆` symbol in iTerm2
 
+You need to remap your alt-key to `Esc+` in iTerm2:
 - `Cmd + ,` to enter preferences
 - Go to Profiles
 - select your profile from the pane on the left hand side
 - go to the keys tab
 - Set Left Option (⌥ ) Key to `Esc+`
+
+See other suggestions on stackoverflow if the above one doesn't help you:
+https://stackoverflow.com/q/196357/205318
+
+Another option is to map to `ctrl+j` instead by putting this in your `.zshrc`:
+
+```sh
+bindkey `^j` jq-complete
+```
 
 ### Disable expanding shell aliases
 
