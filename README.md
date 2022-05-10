@@ -1,6 +1,7 @@
 # jq zsh plugin
 
-Interactively build [jq](https://stedolan.github.io/jq/) expressions.
+Interactively build [jq](https://stedolan.github.io/jq/) expressions
+([gojq](https://github.com/itchyny/gojq) is also supported).
 
 This zsh plugin gives you jq superpowers!
 
