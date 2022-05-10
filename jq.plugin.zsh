@@ -17,7 +17,7 @@ jq-complete() {
     local query="$(__get_query)"
     local ret=$?
     if [ -n "$query" ]; then
-        LBUFFER="${LBUFFER} | jq"
+        LBUFFER="${LBUFFER} | ${JQ_REPL_JQ:-jq}"
         [[ -z "$JQ_REPL_ARGS" ]] || LBUFFER="${LBUFFER} ${JQ_REPL_ARGS}"
         LBUFFER="${LBUFFER} '$query'"
     fi

@@ -65,6 +65,16 @@ During interactive querying, the following shortcuts can be used:
 | `alt + down` | Scroll down full page |
 | `ctrl+r` | Reload input |
 
+
+## gojq support
+
+If you want to use an alternative `jq` implementation, like
+[gojq](https://github.com/itchyny/gojq) then you can override the default jq
+command used by the plugin, by setting the following environment variable:
+```sh
+JQ_REPL_JQ=gojq
+```
+
 ## Demos
 
 ### Interactive jq query construction

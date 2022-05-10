@@ -1,6 +1,9 @@
-#!/usr/bin/env -S jq -r -f
+#!/bin/sh
 # path logic inspired by https://github.com/stedolan/jq/issues/243
+JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
+$JQ_REPL_JQ -r '
 [
   path(..) | map(select(type == "string") // "[]")
   | join(".")
 ] | sort | unique | .[] | split(".[]") | join("[]") | "." + .
+'
