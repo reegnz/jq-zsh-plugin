@@ -3,7 +3,10 @@
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
 $JQ_REPL_JQ -r '
 [
-  path(..) | map(select(type == "string") // "[]")
+  path(..) | map(
+    if type == "string" and test("[^A-z0-9_]") then
+        gsub("^(?<match>.*)$";"[\"\(.match)\"]") 
+    else "[]" end)
   | join(".")
 ] | sort | unique | .[] | split(".[]") | join("[]") | "." + .
 '
