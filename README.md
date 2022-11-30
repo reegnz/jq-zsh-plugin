@@ -43,6 +43,25 @@ antigen bundle reegnz/jq-zsh-plugin
 zgen load reegnz/jq-zsh-plugin
 ```
 
+### [Oh My Zsh](https://ohmyz.sh)
+
+1. Clone this repository into `$ZSH_CUSTOM/plugins` (by default `~/.oh-my-zsh/custom/plugins`)
+
+```sh
+git clone https://github.com/reegnz/jq-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/jq
+```
+
+2. Add the plugin to the list of plugins for Oh My Zsh to load (inside `~/.zshrc`):
+
+```sh
+plugins=( 
+	# other plugins...
+	jq
+)
+```
+
+3. Start a new terminal session.
+
 ## Usage
 
 - type out a command that you expect to produce json on it's standard output
