@@ -7,23 +7,52 @@ This zsh plugin gives you jq superpowers!
 
 ## Table of contents
 
+- [Demos](#demos)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Key bindings](#key-bindings)
-- [Demos](#demos)
-  - [Interactive jq query construction](#interactive-jq-query-construction)
-  - [Insert jq query in the middle of a pipeline](#insert-jq-query-in-the-middle-of-a-pipeline)
+
+## Demos
+
+### Interactive jq query construction
+
+[![asciicast](https://asciinema.org/a/IqAqzPS0ZgeaduQ3qs1B5ZgRI.svg)](https://asciinema.org/a/IqAqzPS0ZgeaduQ3qs1B5ZgRI)
+
+### Insert jq query in the middle of a pipeline
+
+[![asciicast](https://asciinema.org/a/9Q4Va21OzD2VTbHwntmLWGvm6.svg)](https://asciinema.org/a/9Q4Va21OzD2VTbHwntmLWGvm6)
 
 ## Installation
 
-This plugin requires [fzf](https://github.com/junegunn/fzf) to be available
-on your PATH.
+Besides [jq](https://stedolan.github.io/jq/), this plugin also requires
+[fzf](https://github.com/junegunn/fzf#installation) to be installed and available on your
+PATH.
 
-The project consists of the following components:
+The following installation methods are proven to work:
 
-- a `jq-repl` command
-- a `jq-paths` command
-- a `jq.plugin.zsh` providing line-editor feature utilizing `jq-repl`
+* [Oh My Zsh](#oh-my-zsh)
+* [zplug](#zplug)
+* [Antigen](#antigen)
+* [Zgen](#zgen)
+
+### [Oh My Zsh](https://ohmyz.sh)
+
+1. Clone the repository:
+
+```sh
+git clone https://github.com/reegnz/jq-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/jq
+```
+
+2. Add the plugin to the list of plugins for Oh My Zsh to load (inside `~/.zshrc`):
+
+```sh
+plugins=(
+	# other plugins...
+	jq
+)
+```
+
+3. Start a new terminal session.
 
 ### [zplug](https://github.com/zplug/zplug)
 
@@ -43,34 +72,18 @@ antigen bundle reegnz/jq-zsh-plugin
 zgen load reegnz/jq-zsh-plugin
 ```
 
-### [Oh My Zsh](https://ohmyz.sh)
-
-1. Clone this repository into `$ZSH_CUSTOM/plugins` (by default `~/.oh-my-zsh/custom/plugins`)
-
-```sh
-git clone https://github.com/reegnz/jq-zsh-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/jq
-```
-
-2. Add the plugin to the list of plugins for Oh My Zsh to load (inside `~/.zshrc`):
-
-```sh
-plugins=( 
-	# other plugins...
-	jq
-)
-```
-
-3. Start a new terminal session.
-
 ## Usage
 
-- type out a command that you expect to produce json on it's standard output
-- press alt + j and interactively write a jq expression
+- type out a command that you expect to produce json on its standard output
+- press alt + j
+- start typing jq expression and watch it being evaluated in real time (like a true [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)!)
+- use up/down and hit tab to select one of the suggestions
+- or type out a jq query on your own
 - press enter, and the jq expression is appended to your initial command!
 
 ## Key bindings
 
-To bring up the JQ query builder, press `alt + j`.
+Bringing up the jq query builder for a shell command: `alt + j`
 
 During interactive querying, the following shortcuts can be used:
 
@@ -85,31 +98,34 @@ During interactive querying, the following shortcuts can be used:
 | `alt + down` | Scroll down full page |
 | `ctrl+r` | Reload input |
 
-
 ## gojq support
 
 If you want to use an alternative `jq` implementation, like
 [gojq](https://github.com/itchyny/gojq) then you can override the default jq
-command used by the plugin, by setting the following environment variable:
+command used by the plugin. Set the following environment variable:
+
 ```sh
 JQ_REPL_JQ=gojq
 ```
 
-## Demos
+## Internals
 
-### Interactive jq query construction
+The project consists of the following components:
 
-[![asciicast](https://asciinema.org/a/296765.svg)](https://asciinema.org/a/296765)
-
-### Insert jq query in the middle of a pipeline
-
-[![asciicast](https://asciinema.org/a/296767.svg)](https://asciinema.org/a/296767)
+- a `jq.plugin.zsh` providing a [user-defined zsh line-editor
+  widget](https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html),
+  utilizing the `jq-repl` command
+- a `jq-repl` command to interactively build jq expressions, utilizing fzf for
+  its UI
+- a `jq-paths` command to get all valid jq paths in the provided JSON document,
+  used for suggesting paths.
 
 ## Troubleshooting
 
 ### MacOS: Pressing alt-j creates a `∆` symbol in iTerm2
 
 You need to remap your alt-key to `Esc+` in iTerm2:
+
 - `Cmd + ,` to enter preferences
 - Go to Profiles
 - select your profile from the pane on the left hand side
@@ -130,6 +146,6 @@ bindkey `^j` jq-complete
 The plugin automatically expands shell aliases in a command before passing it
 to `jq-repl`. To disable, put the following line into your `.zshrc`:
 
-```
+```sh
 JQ_ZSH_PLUGIN_EXPAND_ALIASES=0
 ```
