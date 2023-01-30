@@ -25,7 +25,7 @@ This zsh plugin gives you jq superpowers!
 ## Installation
 
 Besides [jq](https://stedolan.github.io/jq/), this plugin also requires
-[fzf](https://github.com/junegunn/fzf#installation) to be installed and available on your
+[fzf](https://github.com/junegunn/fzf#installation) ([a recent version](https://github.com/reegnz/jq-zsh-plugin/issues/19)) to be installed and available on your
 PATH.
 
 The following installation methods are proven to work:
