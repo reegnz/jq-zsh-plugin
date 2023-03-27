@@ -21,7 +21,7 @@ if [ "${1:-}" = "--" ]; then
   shift
   export FZF_JQ_REPL_COMMAND="$* > $input; jq-paths <$input"
 else
-  export FZF_JQ_REPL_COMMAND="jq-paths < \"$input\""
+  export FZF_JQ_REPL_COMMAND="< \"$input\" jq-paths"
 fi
 
 fzf_notation_types="~!@#$%^&*;/|"
@@ -40,4 +40,4 @@ eval "$FZF_JQ_REPL_COMMAND" |
     --query="." \
     --bind "tab:replace-query,return:print-query" \
     --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
-    --bind "ctrl-r:reload${fzf_notation}${FZF_JQ_REPL_COMMAND}${fzf_notation}+refresh-preview"
+    --bind "ctrl-r:reload${fzf_notation}${FZF_JQ_REPL_COMMAND} {q}${fzf_notation}+refresh-preview"

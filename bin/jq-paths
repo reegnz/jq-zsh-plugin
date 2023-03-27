@@ -1,16 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 # path logic inspired by https://github.com/stedolan/jq/issues/243
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
-$JQ_REPL_JQ -r '
-[
-  path(..)  |
-  map(
-    # use generic object index syntax if key contains non-alphanumeric characters or starts with a digit
-    select(type == "string" and (test("[^a-zA-Z0-9_]") or test("^[0-9]"))) |= "[\"" + . + "\"]"
-  ) |
-  map(
-    # numbers are assumed to be array indexes only
-    select(type == "number") |= "[]"
-  ) | join(".")
-] | sort | unique | .[] | split(".[") | join("[") | "." + .
-'
+if [[ $# -ne 0 ]]; then
+  FILTER="${1}"
+  ${JQ_REPL_JQ} --raw-output "
+    [
+      ${FILTER} | path(..)  |
+      map(
+        # use generic object index syntax if key contains non-alphanumeric characters or starts with a digit
+        select(type == \"string\" and (test(\"[^a-zA-Z0-9_]\") or test(\"^[0-9]\"))) |= \"[\\\"\" + . + \"\\\"]\"
+      ) |
+      map(
+        # numbers are assumed to be array indexes only
+        select(type == \"number\") |= \"[]\"
+      ) | join(\".\")
+    ] | sort | unique | .[] | split(\".[\") | join(\"[\") | \"${FILTER:gs/\"/\\\"}| .\" + .
+    "
+else
+  ${JQ_REPL_JQ} --raw-output '
+  [
+    path(..)  |
+    map(
+      # use generic object index syntax if key contains non-alphanumeric characters or starts with a digit
+      select(type == "string" and (test("[^a-zA-Z0-9_]") or test("^[0-9]"))) |= "[\"" + . + "\"]"
+    ) |
+    map(
+      # numbers are assumed to be array indexes only
+      select(type == "number") |= "[]"
+    ) | join(".")
+  ] | sort | unique | .[] | split(".[") | join("[") | "." + .
+  '
+fi
