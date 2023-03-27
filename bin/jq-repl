@@ -34,7 +34,7 @@ fi
 
 eval "$FZF_JQ_REPL_COMMAND" |
   fzf \
-    --preview "$JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
+    --preview "bkt --ttl=10m --stale=10s -- $JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
