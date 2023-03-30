@@ -108,6 +108,16 @@ command used by the plugin. Set the following environment variable:
 JQ_REPL_JQ=gojq
 ```
 
+## Caching
+
+`jq-repl` supports caching of the generated previews, which can be useful if you are working with enough data to induce noticable latency in preview generation.
+To enable caching, set the environment variable `JQ_REPL_CACHE_CMD` with your preferred caching tool.
+One example, using [bkt](https://github.com/dimo414/bkt), is below:
+
+``` sh
+JQ_REPL_CACHE_CMD='bkt --ttl=10m --stale10s'
+```
+
 ## Internals
 
 The project consists of the following components:
