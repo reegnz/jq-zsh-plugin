@@ -7,8 +7,6 @@ set -eu
 
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
 
-JQ_REPL_CACHE_CMD="${JQ_REPL_CACHE_CMD:-}"
-
 if [ -n "${1:-}" ] && [ "$1" != "-" ] && [ "$1" != "--" ]; then
   input="$1"
 else
@@ -36,7 +34,7 @@ fi
 
 eval "$FZF_JQ_REPL_COMMAND" |
   fzf \
-    --preview "${JQ_REPL_CACHE_CMD} $JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
+    --preview "${JQ_REPL_CACHE_CMD:-} $JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
