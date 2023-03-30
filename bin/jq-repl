@@ -8,9 +8,6 @@ set -eu
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
 
 JQ_REPL_CACHE_CMD="${JQ_REPL_CACHE_CMD:-}"
-if [ "${#JQ_REPL_CACHE_CMD}" -gt 0 ]; then
-  JQ_REPL_CACHE_CMD="${JQ_REPL_CACHE_CMD} --"
-fi
 
 if [ -n "${1:-}" ] && [ "$1" != "-" ] && [ "$1" != "--" ]; then
   input="$1"

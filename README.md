@@ -115,7 +115,7 @@ To enable caching, set the environment variable `JQ_REPL_CACHE_CMD` with your pr
 One example, using [bkt](https://github.com/dimo414/bkt), is below:
 
 ``` sh
-JQ_REPL_CACHE_CMD='bkt --ttl=10m --stale10s'
+JQ_REPL_CACHE_CMD='bkt --ttl=10m --stale10s --'
 ```
 
 ## Internals
