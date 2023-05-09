@@ -1,7 +1,7 @@
 #!/bin/sh
 # path logic inspired by https://github.com/stedolan/jq/issues/243
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
-$JQ_REPL_JQ -r '
+$JQ_REPL_JQ $JQ_REPL_ARGS -r '
 [
   path(..)  |
   map(
