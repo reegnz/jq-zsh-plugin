@@ -1,0 +1,32 @@
+#!/bin/bash
+set -euo pipefail
+JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
+
+query=$1
+input_file=$2
+last_success_file=$3
+
+out="$last_success_file.new"
+trap 'rm -f "$out"' EXIT
+
+# for colorizing stderr
+red() {
+	while read -r line; do
+		printf "\033[31m%s\033[0m\n" "$line"
+	done
+}
+
+# prints preview query result to stdout, colorizes stderr to red
+do_query() {
+	$JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} "$query" "$input_file"
+} 2> >(red)
+
+echo "Last successful jq expression: $query" | red >"$out"
+echo "Last success output:" | red >>"$out"
+if do_query | tee -a "$out"; then
+	# save successful query plus the result
+	mv "$out" "$last_success_file"
+else
+	# print previously saved successful query
+	cat "$last_success_file"
+fi

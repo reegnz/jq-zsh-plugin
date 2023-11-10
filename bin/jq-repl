@@ -5,13 +5,16 @@
 # if 1st arg is anything else, treat it as a file
 set -eu
 
-JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
+export JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
 
 if [ -n "${1:-}" ] && [ "$1" != "-" ] && [ "$1" != "--" ]; then
   input="$1"
+  output=$(mktemp)
+  trap 'rm -f "$output"' EXIT
 else
   input=$(mktemp)
-  trap 'rm -f "$input"' EXIT
+  output=$(mktemp)
+  trap 'rm -f "$input" "$output"' EXIT
 fi
 
 if [ -z "${1:-}" ] || [ "$1" = "-" ]; then
@@ -34,7 +37,7 @@ fi
 
 eval "$FZF_JQ_REPL_COMMAND" |
   fzf \
-    --preview "$JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} {q} \"$input\"" \
+    --preview "jq-repl-preview {q} $input $output" \
     --preview-window="down:90%" \
     --height="99%" \
     --query="." \
