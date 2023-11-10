@@ -5,9 +5,11 @@ __get_query() {
         unset 'functions[_jq-plugin-expand]'
         functions[_jq-plugin-expand]=${LBUFFER}
         (($+functions[_jq-plugin-expand])) && COMMAND=${functions[_jq-plugin-expand]#$'\t'}
+        # shellcheck disable=SC2086
         jq-repl -- ${COMMAND}
         return $?
     else
+        # shellcheck disable=SC2086
         jq-repl -- ${LBUFFER}
         return $?
     fi
