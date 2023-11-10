@@ -18,6 +18,9 @@ red() {
 
 # prints preview query result to stdout, colorizes stderr to red
 do_query() {
+	# JQ_REPL_ARGS has to be unquoted so it's passed as cli args to jq so
+	# word splitting is desirable here
+	# shellcheck disable=SC2086
 	$JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} "$query" "$input_file"
 } 2> >(red)
 
