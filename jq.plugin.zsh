@@ -14,7 +14,8 @@ __get_query() {
 }
 
 jq-complete() {
-    local query="$(__get_query)"
+    local query
+    query="$(__get_query)"
     local ret=$?
     if [ -n "$query" ]; then
         LBUFFER="${LBUFFER} | ${JQ_REPL_JQ:-jq}"
