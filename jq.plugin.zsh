@@ -1,16 +1,21 @@
 if [[ -o zle ]]; then
 
+__lbuffer_strip_trailing_pipe() {
+    # Strip a trailing pipe and its surrounding whitespace.
+    echo "$LBUFFER" | sed 's/[[:space:]]*\|[[:space:]]*$//'
+}
+
 __get_query() {
     if [ "${JQ_ZSH_PLUGIN_EXPAND_ALIASES:-1}" -eq 1 ]; then
         unset 'functions[_jq-plugin-expand]'
-        functions[_jq-plugin-expand]=${LBUFFER}
+        functions[_jq-plugin-expand]=$(__lbuffer_strip_trailing_pipe)
         (($+functions[_jq-plugin-expand])) && COMMAND=${functions[_jq-plugin-expand]#$'\t'}
         # shellcheck disable=SC2086
         jq-repl -- ${COMMAND}
         return $?
     else
         # shellcheck disable=SC2086
-        jq-repl -- ${LBUFFER}
+        jq-repl -- $(__lbuffer_strip_trailing_pipe)
         return $?
     fi
 }
@@ -20,7 +25,7 @@ jq-complete() {
     query="$(__get_query)"
     local ret=$?
     if [ -n "$query" ]; then
-        LBUFFER="${LBUFFER} | ${JQ_REPL_JQ:-jq}"
+        LBUFFER="$(__lbuffer_strip_trailing_pipe) | ${JQ_REPL_JQ:-jq}"
         [[ -z "$JQ_REPL_ARGS" ]] || LBUFFER="${LBUFFER} ${JQ_REPL_ARGS}"
         LBUFFER="${LBUFFER} '$query'"
     fi
