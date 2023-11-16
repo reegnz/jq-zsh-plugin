@@ -2,7 +2,7 @@ if [[ -o zle ]]; then
 
 __lbuffer_strip_trailing_pipe() {
     # Strip a trailing pipe and its surrounding whitespace.
-    echo "$LBUFFER" | sed 's/[[:space:]]*\|[[:space:]]*$//'
+    sed -E 's/[[:space:]]*\|[[:space:]]*$//' <<<"$LBUFFER"
 }
 
 __get_query() {
