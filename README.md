@@ -5,6 +5,8 @@ Interactively build [jq](https://stedolan.github.io/jq/) expressions
 
 This zsh plugin gives you jq superpowers!
 
+[Fish](https://fishshell.com/) users: you can use this friendly fork: [rmartine-ias/jq-fish-plugin](https://github.com/rmartine-ias/jq-fish-plugin)
+
 ## Table of contents
 
 - [Demos](#demos)
