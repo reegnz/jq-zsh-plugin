@@ -11,25 +11,25 @@ trap 'rm -f "$out"' EXIT
 
 # for colorizing stderr
 red() {
-	while read -r line; do
-		printf "\033[31m%s\033[0m\n" "$line"
-	done
+  while read -r line; do
+    printf "\033[31m%s\033[0m\n" "$line"
+  done
 }
 
 # prints preview query result to stdout, colorizes stderr to red
 do_query() {
-	# JQ_REPL_ARGS has to be unquoted so it's passed as cli args to jq so
-	# word splitting is desirable here
-	# shellcheck disable=SC2086
-	$JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} "$query" "$input_file"
+  # JQ_REPL_ARGS has to be unquoted so it's passed as cli args to jq so
+  # word splitting is desirable here
+  # shellcheck disable=SC2086
+  $JQ_REPL_JQ --color-output ${JQ_REPL_ARGS:-} "$query" "$input_file"
 } 2> >(red)
 
 echo "Last successful jq expression: $query" | red >"$out"
 echo "Last success output:" | red >>"$out"
 if do_query | tee -a "$out"; then
-	# save successful query plus the result
-	mv "$out" "$last_success_file"
+  # save successful query plus the result
+  mv "$out" "$last_success_file"
 else
-	# print previously saved successful query
-	cat "$last_success_file"
+  # print previously saved successful query
+  cat "$last_success_file"
 fi
