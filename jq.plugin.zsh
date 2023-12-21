@@ -8,8 +8,8 @@ if [[ -o zle ]]; then
   __get_query() {
     if [ "${JQ_ZSH_PLUGIN_EXPAND_ALIASES:-1}" -eq 1 ]; then
       unset 'functions[_jq-plugin-expand]'
-      functions[_jq - plugin - expand]=$(__lbuffer_strip_trailing_pipe)
-      (($ + functions[_jq - plugin - expand])) && COMMAND=${functions[_jq - plugin - expand]#$'\t'}
+      functions[_jq-plugin-expand]=$(__lbuffer_strip_trailing_pipe)
+      (($+functions[_jq-plugin-expand])) && COMMAND=${functions[_jq-plugin-expand]#$'\t'}
       # shellcheck disable=SC2086
       jq-repl -- ${COMMAND}
       return $?
