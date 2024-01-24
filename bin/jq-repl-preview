@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 JQ_REPL_JQ="${JQ_REPL_JQ:-jq}"
 
