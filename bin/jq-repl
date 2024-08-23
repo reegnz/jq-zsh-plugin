@@ -35,6 +35,13 @@ if [ -z "$fzf_notation" ]; then
   fzf_notation="#"
 fi
 
+# default ignore
+FZF_COPY_TO_CLIPBOARD="execute-silent(ignore)"
+
+# other platforms can be supported here as needed
+command -v xclip > /dev/null && \
+  FZF_COPY_TO_CLIPBOARD="execute-silent(echo -n {} | xclip -in -sel clip)+abort"
+
 eval "$FZF_JQ_REPL_COMMAND" |
   fzf \
     --preview "jq-repl-preview {q} $input $output" \
@@ -42,5 +49,9 @@ eval "$FZF_JQ_REPL_COMMAND" |
     --height="99%" \
     --query="." \
     --bind "tab:replace-query,return:print-query" \
+    --bind "ctrl-p:preview-up,ctrl-n:preview-down" \
+    --bind "ctrl-alt-p:preview-half-page-up,ctrl-alt-n:preview-half-page-down" \
+    --bind "shift-up:preview-up,shift-down:preview-down" \
     --bind "alt-up:preview-page-up,alt-down:preview-page-down" \
+    --bind "ctrl-y:$FZF_COPY_TO_CLIPBOARD" \
     --bind "ctrl-r:reload${fzf_notation}${FZF_JQ_REPL_COMMAND}${fzf_notation}+refresh-preview"
