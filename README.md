@@ -1,11 +1,12 @@
 # jq zsh plugin
 
-Interactively build [jq](https://stedolan.github.io/jq/) expressions
-([gojq](https://github.com/itchyny/gojq) is also supported).
+Interactively build [jq](https://stedolan.github.io/jq/) expressions ([gojq](https://github.com/itchyny/gojq)
+is also supported).
 
 This zsh plugin gives you jq superpowers!
 
-[Fish](https://fishshell.com/) users: you can use this friendly fork: [rmartine-ias/jq-fish-plugin](https://github.com/rmartine-ias/jq-fish-plugin)
+[Fish](https://fishshell.com/) users: you can use this friendly fork:
+[rmartine-ias/jq-fish-plugin](https://github.com/rmartine-ias/jq-fish-plugin)
 
 ## Table of contents
 
@@ -27,15 +28,16 @@ This zsh plugin gives you jq superpowers!
 ## Installation
 
 Besides [jq](https://stedolan.github.io/jq/), this plugin also requires
-[fzf](https://github.com/junegunn/fzf#installation) ([a recent version](https://github.com/reegnz/jq-zsh-plugin/issues/19)) to be installed and available on your
+[fzf](https://github.com/junegunn/fzf#installation)
+([a recent version](https://github.com/reegnz/jq-zsh-plugin/issues/19)) to be installed and available on your
 PATH.
 
 The following installation methods are proven to work:
 
-* [Oh My Zsh](#oh-my-zsh)
-* [zplug](#zplug)
-* [Antigen](#antigen)
-* [Zgen](#zgen)
+- [Oh My Zsh](#oh-my-zsh)
+- [zplug](#zplug)
+- [Antigen](#antigen)
+- [Zgen](#zgen)
 
 ### [Oh My Zsh](https://ohmyz.sh)
 
@@ -78,7 +80,8 @@ zgen load reegnz/jq-zsh-plugin
 
 - type out a command that you expect to produce json on its standard output
 - press alt + j
-- start typing jq expression and watch it being evaluated in real time (like a true [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)!)
+- start typing jq expression and watch it being evaluated in real time (like a true
+  [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)!)
 - use up/down and hit tab to select one of the suggestions
 - or type out a jq query on your own
 - press enter, and the jq expression is appended to your initial command!
@@ -89,22 +92,24 @@ Bringing up the jq query builder for a shell command: `alt + j`
 
 During interactive querying, the following shortcuts can be used:
 
-| Shortcut | Effect |
-| ------ | -------- |
-| `up` | Navigate path queries |
-| `down` | Navigate path queries |
-| `tab` | Select path query |
-| `shift + up` | Scroll up |
-| `shift + down` | Scroll down |
-| `alt + up` | Scroll up full page |
-| `alt + down` | Scroll down full page |
-| `ctrl+r` | Reload input |
+| Shortcut                 | Effect                                           |
+| ------------------------ | ------------------------------------------------ |
+| `ctrl-k` or `up`         | Navigate path queries                            |
+| `ctrl-j` or `down`       | Navigate path queries                            |
+| `tab`                    | Select path query                                |
+| `ctrl-p` or `shift-up`   | Scroll up                                        |
+| `ctrl-n` or `shift-down` | Scroll down                                      |
+| `ctrl-alt-p`             | Scroll up half page                              |
+| `ctrl-alt-n`             | Scroll down half page                            |
+| `alt-up`                 | Scroll up full page                              |
+| `alt-down`               | Scroll down full page                            |
+| `ctrl-r`                 | Reload input                                     |
+| `ctrl-y`                 | Yank selected path to clipboard (GNU/Linux only) |
 
 ## gojq support
 
-If you want to use an alternative `jq` implementation, like
-[gojq](https://github.com/itchyny/gojq) then you can override the default jq
-command used by the plugin. Set the following environment variable:
+If you want to use an alternative `jq` implementation, like [gojq](https://github.com/itchyny/gojq) then you
+can override the default jq command used by the plugin. Set the following environment variable:
 
 ```sh
 JQ_REPL_JQ=gojq
@@ -114,13 +119,11 @@ JQ_REPL_JQ=gojq
 
 The project consists of the following components:
 
-- a `jq.plugin.zsh` providing a [user-defined zsh line-editor
-  widget](https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html),
+- a `jq.plugin.zsh` providing a
+  [user-defined zsh line-editor widget](https://zsh.sourceforge.io/Doc/Release/Zsh-Line-Editor.html),
   utilizing the `jq-repl` command
-- a `jq-repl` command to interactively build jq expressions, utilizing fzf for
-  its UI
-- a `jq-paths` command to get all valid jq paths in the provided JSON document,
-  used for suggesting paths.
+- a `jq-repl` command to interactively build jq expressions, utilizing fzf for its UI
+- a `jq-paths` command to get all valid jq paths in the provided JSON document, used for suggesting paths.
 
 ## Troubleshooting
 
@@ -145,8 +148,8 @@ bindkey `^j` jq-complete
 
 ### Disable expanding shell aliases
 
-The plugin automatically expands shell aliases in a command before passing it
-to `jq-repl`. To disable, put the following line into your `.zshrc`:
+The plugin automatically expands shell aliases in a command before passing it to `jq-repl`. To disable, put
+the following line into your `.zshrc`:
 
 ```sh
 JQ_ZSH_PLUGIN_EXPAND_ALIASES=0
